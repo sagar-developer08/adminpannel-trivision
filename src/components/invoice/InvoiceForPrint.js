@@ -26,7 +26,7 @@ const InvoiceForPrint = ({ data, printRef, globalSetting }) => {
 
   const { t } = useTranslation();
 
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "AED";
 
   return (
     <div ref={printRef} className="p-4">

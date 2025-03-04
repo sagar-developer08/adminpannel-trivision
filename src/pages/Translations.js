@@ -246,8 +246,8 @@ export const translationEn = {
   CouponspageTitle: "Coupon",
   SelectedCoupon: "Selected Coupon",
   AttributeTitle: "Attributes",
-  SearchAttributePlaceholder: "Search by attribute name",
-  CouponsAddAttributeBtn: "Add Attribute",
+  SearchAttributePlaceholder: "Search by brand name",
+  CouponsAddAttributeBtn: "Add Brand",
   AddCouponsBtn: "Add Coupon",
   CouponBannerImage: "Coupon Banner Image",
   SearchCoupon: "Search by coupon code/name",
@@ -287,13 +287,13 @@ export const translationEn = {
   AAction: "ACTION",
 
   //Attribute Drawer
-  UpdateAttribute: "Update Attribute Value",
+  UpdateAttribute: "Update Brand Value",
   UpdateAttributeDesc:
     "Updated your attribute values and necessary information from here",
-  AddAttribute: "Add Attribute Value",
+  AddAttribute: "Add Brand Value",
   AddAttributeDesc:
     "Add your attribute values and necessary information from here",
-  DrawerAttributeTitle: "Attribute Title",
+  DrawerAttributeTitle: "Brand Title",
   DisplayName: "Display Name",
   DrawerOptions: "Options",
   DrawerSelecttype: "Select type",
@@ -1336,14 +1336,14 @@ export const translationDe = {
 
   //Attribute Drawer
   Values: "Werte",
-  UpdateAttribute: "Update Attribute Value",
+  UpdateAttribute: "Update Brand Value",
   UpdateAttributeDesc:
     "Updated your attribute values and necessary information from here",
-  AddAttribute: "Add Attribute Value",
+  AddAttribute: "Add Brand Value",
   AddAttributeDesc:
     "Add your attribute values and necessary information from here",
 
-  DrawerAttributeTitle: "Attribute Title",
+  DrawerAttributeTitle: "Brand Title",
   DisplayName: "Anzeigename",
   DrawerOptions: "Options",
   DrawerSelecttype: "Select type",

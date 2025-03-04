@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 //internal import
-import { SidebarContext } from '../context/SidebarContext';
-import AttributeServices from '../services/AttributeServices';
-import { notifyError, notifySuccess } from '../utils/toast';
-import useToggleDrawer from './useToggleDrawer';
+import { SidebarContext } from "../context/SidebarContext";
+import AttributeServices from "../services/AttributeServices";
+import { notifyError, notifySuccess } from "../utils/toast";
+import useToggleDrawer from "./useToggleDrawer";
 
 const useAttributeSubmit = (id) => {
   const location = useLocation();
@@ -15,6 +15,7 @@ const useAttributeSubmit = (id) => {
   const [variants, setVariants] = useState([]);
   const [language, setLanguage] = useState(lang);
   const [resData, setResData] = useState({});
+  const [imageUrl, setImageUrl] = useState([]);
   const [published, setPublished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -41,29 +42,34 @@ const useAttributeSubmit = (id) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async ({ title, name, option }) => {
+  const onSubmit = async ({
+    name,
+    slug,
+    title,
+    content,
+    brand_logo,
+    meta_title,
+    meta_description,
+  }) => {
     try {
       setIsSubmitting(true);
       if (!id) {
-        if (variants.length === 0) {
-          notifyError('Minimum one value is required for add attribute!');
+        if (!name) {
+          notifyError("Add brand name!");
           return;
         }
       }
       const attributeData = {
-        title: {
-          [language]: title,
-        },
-        name: {
-          [language]: name,
-        },
-        variants: variantArrayOfObject,
-        option: option,
-        type: 'attribute',
-        lang: language,
+        name: name,
+        slug: slug,
+        title: title,
+        content: content,
+        brand_logo: brand_logo,
+        meta_title: meta_title,
+        meta_description: meta_description,
       };
 
-      // console.log("attributeData", attributeData);
+      console.log("attributeData", attributeData);
 
       if (id) {
         const res = await AttributeServices.updateAttributes(id, attributeData);
@@ -94,12 +100,12 @@ const useAttributeSubmit = (id) => {
       setIsSubmitting(true);
       if (id) {
         const res = await AttributeServices.updateChildAttributes(
-          { ids: location.pathname.split('/')[2], id },
+          { ids: location.pathname.split("/")[2], id },
           {
             name: {
               [language]: name,
             },
-            status: published ? 'show' : 'hide',
+            status: published ? "show" : "hide",
           }
         );
         setIsUpdate(true);
@@ -108,12 +114,12 @@ const useAttributeSubmit = (id) => {
         closeDrawer();
       } else {
         const res = await AttributeServices.addChildAttribute(
-          location.pathname.split('/')[2],
+          location.pathname.split("/")[2],
           {
             name: {
               [language]: name,
             },
-            status: published ? 'show' : 'hide',
+            status: published ? "show" : "hide",
           }
         );
         setIsUpdate(true);
@@ -136,8 +142,8 @@ const useAttributeSubmit = (id) => {
   const handleSelectLanguage = (lang) => {
     setLanguage(lang);
     if (Object.keys(resData).length > 0) {
-      setValue('title', resData.title[lang ? lang : 'en']);
-      setValue('name', resData.name[lang ? lang : 'en']);
+      setValue("title", resData.title[lang ? lang : "en"]);
+      setValue("name", resData.name[lang ? lang : "en"]);
       // console.log('change lang', lang);
     }
   };
@@ -148,54 +154,65 @@ const useAttributeSubmit = (id) => {
 
   const addVariant = (e) => {
     e.preventDefault();
-    if (e.target.value !== '') {
+    if (e.target.value !== "") {
       setVariants([...variants, e.target.value]);
-      e.target.value = '';
+      e.target.value = "";
     }
   };
 
   useEffect(() => {
     if (!isDrawerOpen) {
       setResData({});
-      setValue('title');
-      setValue('name');
-      setValue('option');
-      clearErrors('title');
-      clearErrors('name');
-      clearErrors('option');
+      setValue("name");
+      setValue("slug");
+      setValue("title");
+      setValue("content");
+      setValue("brand_logo");
+      setValue("option");
+      clearErrors("name");
+      clearErrors("slug");
+      clearErrors("title");
+      clearErrors("content");
+      clearErrors("brand_logo");
+      clearErrors("option");
       setVariants([]);
+      setImageUrl([]);
       setLanguage(lang);
-      setValue('language', language);
+      setValue("language", language);
       return;
     }
 
-    if (location.pathname === '/attributes' && id) {
+    if (location.pathname === "/attributes" && id) {
       (async () => {
         try {
           const res = await AttributeServices.getAttributeById(id);
           if (res) {
             setResData(res);
-            setValue('title', res.title[language ? language : 'en']);
-            setValue('name', res.name[language ? language : 'en']);
-            setValue('option', res.option);
+            setValue("name", res.name);
+            setValue("slug", res.slug);
+            setValue("title", res.title);
+            setValue("content", res.content);
+            setValue("brand_logo", res.brand_logo);
+            setImageUrl([res.brand_logo]);
+            setValue("option", res.categories);
           }
         } catch (err) {
           notifyError(err ? err?.response?.data?.message : err.message);
         }
       })();
     } else if (
-      location.pathname === `/attributes/${location.pathname.split('/')[2]}`
+      location.pathname === `/attributes/${location.pathname.split("/")[2]}`
     ) {
       (async () => {
         try {
           const res = await AttributeServices.getChildAttributeById({
-            id: location.pathname.split('/')[2],
+            id: location.pathname.split("/")[2],
             ids: id,
           });
           if (res) {
             // console.log('res child', res);
-            setValue('name', res.name[language ? language : 'en']);
-            setPublished(res.status === 'show' ? true : false);
+            setValue("name", res.name[language ? language : "en"]);
+            setPublished(res.status === "show" ? true : false);
           }
         } catch (err) {
           notifyError(err ? err?.response?.data?.message : err.message);
@@ -218,6 +235,8 @@ const useAttributeSubmit = (id) => {
     setPublished,
     isSubmitting,
     handleSelectLanguage,
+    imageUrl,
+    setImageUrl,
   };
 };
 

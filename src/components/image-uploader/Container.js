@@ -33,7 +33,7 @@ const Container = ({ setImageUrl, imageUrl, handleRemoveImage }) => {
     },
     [moveCard, handleRemoveImage]
   );
-  return <>{imageUrl.map((card, i) => renderCard(card, i))}</>;
+  return <>{imageUrl?.map((card, i) => renderCard(card, i))}</>;
 };
 
 export default Container;

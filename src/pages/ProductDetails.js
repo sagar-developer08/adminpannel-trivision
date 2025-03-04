@@ -25,7 +25,6 @@ import ProductServices from "services/ProductServices";
 import { showingTranslateValue } from "utils/translate";
 import SettingServices from "services/SettingServices";
 
-
 const ProductDetails = () => {
   const { id } = useParams();
   const { t } = useTranslation();
@@ -36,7 +35,7 @@ const ProductDetails = () => {
   console.log(data, "product-details");
 
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "AED";
 
   return (
     <>
@@ -55,7 +54,7 @@ const ProductDetails = () => {
             <div className="flex-shrink-0 flex items-center justify-center h-auto">
               {data?.product_images?.length ? (
                 <img
-                  src={data.product_images[0]}
+                  src={data?.product_images?.[0]}
                   alt="product"
                   className="h-64 w-64"
                 />
@@ -83,8 +82,7 @@ const ProductDetails = () => {
               {/* Price */}
               <div className="font-serif product-price font-bold dark:text-gray-400">
                 <span className="inline-block text-2xl">
-                  {currency}
-                  {data?.retail_price}
+                  {currency} {data?.retail_price}
                 </span>
               </div>
 

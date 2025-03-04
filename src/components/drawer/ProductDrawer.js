@@ -85,8 +85,8 @@ const ProductDrawer = ({ id }) => {
     handleSelectInlineImage,
     handleGenerateCombination,
   } = useProductSubmit(id);
-console.log(id,'saad')
-  const currency = globalSetting?.default_currency || "$";
+
+  const currency = globalSetting?.default_currency || "AED";
 
   return (
     <>
@@ -164,19 +164,35 @@ console.log(id,'saad')
                 <div className="col-span-8 sm:col-span-4">{productId}</div>
               </div> */}
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <LabelArea label={t("ProductTitleName")} />
+                <LabelArea label="Product Short Name" />
                 <div className="col-span-8 sm:col-span-4">
                   <Input
-                    {...register(`title`, {
-                      required: "TItle is required!",
+                    {...register(`product_name_short`, {
+                      required: "Product Short Name is required!",
                     })}
                     className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                    name="title"
+                    name="product_name_short"
                     type="text"
-                    placeholder={t("ProductTitleName")}
+                    placeholder="Product Short Name"
                     onBlur={(e) => handleProductSlug(e.target.value)}
                   />
-                  <Error errorName={errors.title} />
+                  <Error errorName={errors?.product_name_short} />
+                </div>
+              </div>
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <LabelArea label="Product Long Name" />
+                <div className="col-span-8 sm:col-span-4">
+                  <Input
+                    {...register(`product_name_long`, {
+                      required: "Product Long Name is required!",
+                    })}
+                    className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
+                    name="product_name_long"
+                    type="text"
+                    placeholder="Product Long Name"
+                    onBlur={(e) => handleProductSlug(e.target.value)}
+                  />
+                  <Error errorName={errors?.product_name_long} />
                 </div>
               </div>
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -184,15 +200,15 @@ console.log(id,'saad')
                 <div className="col-span-8 sm:col-span-4">
                   <Textarea
                     className="border text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                    {...register("description", {
+                    {...register("product_description", {
                       required: false,
                     })}
-                    name="description"
+                    name="product_description"
                     placeholder={t("ProductDescription")}
                     rows="4"
                     spellCheck="false"
                   />
-                  <Error errorName={errors.description} />
+                  <Error errorName={errors.product_description} />
                 </div>
               </div>
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -214,26 +230,26 @@ console.log(id,'saad')
                     register={register}
                     required="false"
                     label={t("ProductSKU")}
-                    name="sku"
+                    name="model_code"
                     type="text"
                     placeholder={t("ProductSKU")}
                   />
-                  <Error errorName={errors.sku} />
+                  <Error errorName={errors.model_code} />
                 </div>
               </div>
 
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <LabelArea label={t("ProductBarcode")} />
+                <LabelArea label="Product Model" />
                 <div className="col-span-8 sm:col-span-4">
                   <InputArea
                     register={register}
                     required="false"
-                    label={t("ProductBarcode")}
-                    name="barcode"
+                    label="Product Model"
+                    name="model_name"
                     type="text"
-                    placeholder={t("ProductBarcode")}
+                    placeholder="Product Model"
                   />
-                  <Error errorName={errors.barcode} />
+                  <Error errorName={errors.model_name} />
                 </div>
               </div>
 
@@ -276,20 +292,20 @@ console.log(id,'saad')
                     register={register}
                     maxValue={2000}
                     minValue={1}
-                    label="Original Price"
-                    name="originalPrice"
+                    label="Price"
+                    name="retail_price"
                     type="number"
-                    placeholder="OriginalPrice"
+                    placeholder="Price"
                     defaultValue={0.0}
                     required="false"
                     product
                     currency={currency}
                   />
-                  <Error errorName={errors.originalPrice} />
+                  <Error errorName={errors.retail_price} />
                 </div>
               </div>
 
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <LabelArea label={t("SalePrice")} />
                 <div className="col-span-8 sm:col-span-4">
                   <InputValue
@@ -306,7 +322,7 @@ console.log(id,'saad')
                   />
                   <Error errorName={errors.price} />
                 </div>
-              </div>
+              </div> */}
 
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
                 <LabelArea label={t("ProductQuantity")} />
@@ -316,11 +332,11 @@ console.log(id,'saad')
                     minValue={0}
                     defaultValue={0}
                     label="Quantity"
-                    name="stock"
+                    name="product_count"
                     type="number"
                     placeholder={t("ProductQuantity")}
                   />
-                  <Error errorName={errors.stock} />
+                  <Error errorName={errors.product_count} />
                 </div>
               </div>
 
@@ -342,7 +358,7 @@ console.log(id,'saad')
                 </div>
               </div>
 
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <LabelArea label={t("ProductTag")} />
                 <div className="col-span-8 sm:col-span-4">
                   <ReactTagInput
@@ -351,7 +367,7 @@ console.log(id,'saad')
                     onChange={(newTags) => setTag(newTags)}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
 

@@ -1,5 +1,4 @@
-import { Select } from "@windmill/react-ui";
-import React, { Fragment } from "react";
+import React from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 //internal import
 import { useTranslation } from "react-i18next";
@@ -7,9 +6,10 @@ import useAttributeSubmit from "hooks/useAttributeSubmit";
 import Title from "components/form/Title";
 import LabelArea from "components/form/LabelArea";
 import InputArea from "components/form/InputArea";
+import { Textarea } from "@windmill/react-ui";
 import Error from "components/form/Error";
 import DrawerButton from "components/form/DrawerButton";
-import TagInputTwo from "components/common/TagInputTwo";
+import Uploader from "components/image-uploader/Uploader";
 
 const AttributeDrawer = ({ id }) => {
   const {
@@ -17,10 +17,9 @@ const AttributeDrawer = ({ id }) => {
     onSubmit,
     register,
     errors,
-    variants,
-    addVariant,
     isSubmitting,
-    removeVariant,
+    imageUrl,
+    setImageUrl,
     handleSelectLanguage,
   } = useAttributeSubmit(id);
 
@@ -48,83 +47,76 @@ const AttributeDrawer = ({ id }) => {
 
       <Scrollbars className="w-full md:w-7/12 lg:w-8/12 xl:w-8/12 relative dark:bg-gray-700 dark:text-gray-200">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full">
+          <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full h-full pb-40">
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("DrawerAttributeTitle")} />
+              <LabelArea label="Brand Logo" />
               <div className="col-span-8 sm:col-span-4">
-                {/* <SelectAttribute
-                  register={register}
-                  label="Attribute Title"
-                  name="title"
-                /> */}
-                <InputArea
-                  register={register}
-                  label="Attribute Title"
-                  name="title"
-                  type="text"
-                  placeholder="Color or Size or Dimension or Material or Fabric"
+                <Uploader
+                  // product
+                  // folder="brand"
+                  imageUrl={imageUrl}
+                  setImageUrl={setImageUrl}
                 />
-                <Error errorName={errors.title} />
               </div>
             </div>
-
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-              <LabelArea label={t("DisplayName")} />
+              <LabelArea label="Brand Name" />
               <div className="col-span-8 sm:col-span-4">
                 <InputArea
                   register={register}
-                  label="Display Name"
+                  label="Brand Name"
                   name="name"
                   type="text"
-                  placeholder="Display Name"
+                  placeholder="Brand Name"
                 />
                 <Error errorName={errors.name} />
               </div>
             </div>
-
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 relative">
-              <LabelArea label={t("DrawerOptions")} />
-              <div className="col-span-8 sm:col-span-4 ">
-                <Select
-                  className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                  name="option"
-                  {...register(`option`, {
-                    required: `Option is required!`,
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+              <LabelArea label="Brand Slug" />
+              <div className="col-span-8 sm:col-span-4">
+                <InputArea
+                  register={register}
+                  label="Brand Slug"
+                  name="slug"
+                  type="text"
+                  placeholder="Brand Slug"
+                />
+                <Error errorName={errors.slug} />
+              </div>
+            </div>
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <LabelArea label="Title" />
+              <div className="col-span-8 sm:col-span-4">
+                <InputArea
+                  register={register}
+                  label="Title"
+                  name="title"
+                  type="text"
+                  placeholder="Brand Title"
+                />
+                <Error errorName={errors.title} />
+              </div>
+            </div>
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <LabelArea label="Brand Description" />
+              <div className="col-span-8 sm:col-span-4">
+                <Textarea
+                  className="border text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                  {...register("content", {
+                    required: "Brand Description is required.",
                   })}
-                >
-                  <option value="" defaultValue hidden>
-                    {t("DrawerSelecttype")}
-                  </option>
-                  <option value="Dropdown">{t("Dropdown")}</option>
-                  <option value="Radio">{t("Radio")}</option>
-                  {/* <option value="Checkbox">Checkbox</option> */}
-                </Select>
-                <Error errorName={errors.option} />
+                  name="content"
+                  placeholder="Brand Description"
+                  rows="4"
+                  spellCheck="false"
+                />
+                <Error errorName={errors.content} />
               </div>
             </div>
           </div>
-
-          <DrawerButton id={id} title="Attribute" isSubmitting={isSubmitting} />
+          <DrawerButton id={id} title="Brand" isSubmitting={isSubmitting} />
         </form>
-        <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40 ">
-          {!id && (
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-              <LabelArea label={t("Variants")} />
-              <div className="col-span-8 sm:col-span-4">
-                <TagInputTwo
-                  notes={variants}
-                  addNote={addVariant}
-                  removeNote={removeVariant}
-                />
-                {/* <ReactTagInput
-                    placeholder="White or S or Cotton or 40X60 or Premium...(Write then press enter to add new color)"
-                    tags={variants}
-                    onChange={(variant) => setVariants(variant)}
-                  /> */}
-              </div>
-            </div>
-          )}
-        </div>
       </Scrollbars>
     </>
   );

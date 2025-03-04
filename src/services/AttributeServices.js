@@ -1,74 +1,72 @@
-import requests from './httpService';
+import requests from "./httpService";
 
 const AttributeServices = {
-  getAllAttributes: async ({ type, option, option1 }) => {
-    return requests.get(
-      `/attributes?type=${type}&option=${option}&option1=${option1}`
-    );
+  getAllAttributes: async () => {
+    return requests.get(`/brands/all`);
   },
 
   getShowingAttributes: async (body) => {
-    return requests.get('/attributes/show', body);
+    return requests.get("/brands/show", body);
   },
 
   addAttribute: async (body) => {
-    return requests.post('/attributes/add', body);
+    return requests.post("/brands/add", body);
   },
 
   addChildAttribute: async (id, body) => {
-    return requests.put(`/attributes/add/child/${id}`, body);
+    return requests.put(`/brands/add/child/${id}`, body);
   },
 
   addAllAttributes: async (body) => {
-    return requests.post('/attributes/add/all', body);
+    return requests.post("/brands/add/all", body);
   },
 
   getAttributeById: async (id) => {
-    return requests.get(`/attributes/${id}`);
+    return requests.get(`/brands/${id}`);
   },
 
   getChildAttributeById: async ({ id, ids }) => {
-    return requests.get(`/attributes/child/${id}/${ids}`);
+    return requests.get(`/brands/child/${id}/${ids}`);
   },
 
   updateAttributes: async (id, body) => {
-    return requests.put(`/attributes/${id}`, body);
+    return requests.put(`/brands/${id}`, body);
   },
 
   updateChildAttributes: async ({ id, ids }, body) => {
-    return requests.put(`/attributes/update/child/${ids}/${id}`, body);
+    return requests.put(`/brands/update/child/${ids}/${id}`, body);
   },
 
   updateStatus: async (id, body) => {
-    return requests.put(`/attributes/status/${id}`, body);
+    return requests.put(`/brands/status/${id}`, body);
   },
 
   updateChildStatus: async (id, body) => {
-    return requests.put(`/attributes/status/child/${id}`, body);
+    return requests.put(`/brands/status/child/${id}`, body);
   },
 
   deleteAttribute: async (id, body) => {
-    return requests.delete(`/attributes/${id}`, body);
+    return requests.delete(`/brands/${id}`, body);
   },
 
   deleteChildAttribute: async ({ id, ids }, body) => {
-    return requests.put(`/attributes/delete/child/${ids}/${id}`, body);
+    return requests.put(`/brands/delete/child/${ids}/${id}`, body);
   },
 
   updateManyAttribute: async (body) => {
-    return requests.patch('/attributes/update/many', body);
+    return requests.patch("/brands/update/many", body);
   },
 
   updateManyChildAttribute: async (body) => {
-    return requests.patch('/attributes/update/child/many', body);
+    return requests.patch("/brands/update/child/many", body);
   },
 
   deleteManyAttribute: async (body) => {
-    return requests.patch('/attributes/delete/many', body);
+    return requests.patch("/brands/delete/many", body);
   },
 
   deleteManyChildAttribute: async (body) => {
-    return requests.patch('/attributes/delete/child/many', body);
+    return requests.patch("/brands/delete/child/many", body);
   },
 };
 

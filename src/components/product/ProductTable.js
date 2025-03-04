@@ -33,6 +33,10 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
     }
   };
 
+  {
+    console.log("products::", products?.[0]?._id);
+  }
+
   return (
     <>
       {isCheck?.length < 1 && <DeleteModal id={serviceId} title={title} />}
@@ -57,13 +61,9 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
             </TableCell>
 
             <TableCell>
-            <TableCell>
-              <span className="text-sm">
-                {product.product_name_short}
-              </span>
-            </TableCell>
-
-           
+              <TableCell>
+                <span className="text-sm">{product?.product_name_short}</span>
+              </TableCell>
 
               {/* <div className="flex items-center">
                 {product?.image[0] ? (
@@ -89,35 +89,29 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
               </div> */}
             </TableCell>
 
-          
             <TableCell>
-              <span className="text-sm">
-                {product.category.name}
-              </span>
+              <span className="text-sm">{product?.category?.name}</span>
             </TableCell>
- 
+
             <TableCell>
               <span className="text-sm font-semibold">
-               {product?.brand?.name}
+                {product?.brand?.name}
               </span>
             </TableCell>
 
             <TableCell>
               <span className="text-sm font-semibold">
-                {currency}
-                {Number(product?.retail_price).toFixed(2)}
+                {currency} {Number(product?.retail_price).toFixed(2)}
               </span>
             </TableCell>
 
-           
-
             <TableCell>
-              <span className="text-sm">{product.product_count}</span>
+              <span className="text-sm">{product?.product_count}</span>
             </TableCell>
-           
+
             <TableCell>
               <Link
-                to={`/product/${product._id}`}
+                to={`/product/${product?._id}`}
                 className="flex justify-center text-gray-400 hover:text-green-600"
               >
                 <Tooltip
@@ -134,7 +128,7 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
             </TableCell> */}
             <TableCell>
               <EditDeleteButton
-                id={product._id}  
+                id={product._id}
                 product={product}
                 isCheck={isCheck}
                 handleUpdate={handleUpdate}

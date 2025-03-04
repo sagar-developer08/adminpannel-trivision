@@ -237,7 +237,7 @@ const Orders = () => {
               lang={lang}
               orders={dataTable}
               globalSetting={globalSetting}
-              currency={globalSetting?.default_currency || "$"}
+              currency={globalSetting?.default_currency || "AED"}
             />
           </Table>
 

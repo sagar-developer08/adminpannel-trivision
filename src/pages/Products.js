@@ -64,10 +64,10 @@ const Products = () => {
       price: sortedField,
     })
   );
-  console.log('product data',category)
+  console.log("product data", category);
 
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "AED";
   // console.log("product page", data);
 
   // react hooks

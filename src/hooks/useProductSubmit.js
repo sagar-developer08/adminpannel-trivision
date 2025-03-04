@@ -33,11 +33,10 @@ const useProductSubmit = (id) => {
   const [variant, setVariant] = useState([]);
   const [totalStock, setTotalStock] = useState(0);
   const [quantity, setQuantity] = useState(0);
-
   const [originalPrice, setOriginalPrice] = useState(0);
   const [price, setPrice] = useState(0);
-  const [sku, setSku] = useState("");
-  const [barcode, setBarcode] = useState("");
+  const [modelCode, setModelCode] = useState("");
+  const [modelName, setModelName] = useState("");
   const [isBasicComplete, setIsBasicComplete] = useState(false);
   const [tapValue, setTapValue] = useState("Basic Info");
   const [isCombination, setIsCombination] = useState(false);
@@ -56,7 +55,7 @@ const useProductSubmit = (id) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [slug, setSlug] = useState("");
 
-  // console.log("lang", lang);
+  console.log("selectedCategory::", selectedCategory);
 
   // console.log(
   //   "defaultCategory",
@@ -81,7 +80,7 @@ const useProductSubmit = (id) => {
       setIsSubmitting(true);
       if (!imageUrl) return notifyError("Image is required!");
 
-      if (data.originalPrice < data.price) {
+      if (data.retail_price < data.price) {
         setIsSubmitting(false);
         return notifyError(
           "SalePrice must be less then or equal of product price!"
@@ -96,7 +95,7 @@ const useProductSubmit = (id) => {
         const newObj = {
           ...v,
           price: Number(v?.price || 0),
-          originalPrice: Number(v?.originalPrice || 0),
+          originalPrice: Number(v?.retail_price || 0),
           discount: Number(v?.discount || 0),
           quantity: Number(v?.quantity || 0),
         };
@@ -106,22 +105,24 @@ const useProductSubmit = (id) => {
       setIsBasicComplete(true);
       setPrice(data.price);
       setQuantity(data.stock);
-      setBarcode(data.barcode);
-      setSku(data.sku);
-      setOriginalPrice(data.originalPrice);
+      setModelName(data.model_name);
+      setModelCode(data.model_code);
+      setOriginalPrice(data.retail_price);
 
       const productData = {
         productId: productId,
-        sku: data.sku || "",
-        barcode: data.barcode || "",
-        title: {
-          [language]: data.title,
-        },
-        description: { [language]: data.description ? data.description : "" },
+        model_code: data.model_code || "",
+        model_name: data.model_name || "",
+        product_name_short: data.product_name_short,
+        product_name_long: data.product_name_long,
+        product_description: data.product_description
+          ? data.product_description
+          : "",
         slug: data.slug
           ? data.slug
-          : data.title.toLowerCase().replace(/[^A-Z0-9]+/gi, "-"),
-
+          : data.product_name_short.toLowerCase().replace(/[^A-Z0-9]+/gi, "-"),
+        retail_price: data.retail_price,
+        product_count: data.product_count,
         categories: selectedCategory.map((item) => item._id),
         category: defaultCategory[0]._id,
 
@@ -168,29 +169,32 @@ const useProductSubmit = (id) => {
         // console.log("res is ", res);
         if (isCombination) {
           setUpdatedId(res._id);
-          setValue("title", res.title[language ? language : "en"]);
-          setValue("description", res.description[language ? language : "en"]);
+          setValue("product_name_short", res.product_name_short);
+          setValue("product_name_long", res.product_name_long);
+          setValue("product_description", res.product_description);
           setValue("slug", res.slug);
+          setValue("retail_price", res.retail_price);
+          setValue("product_count", res.product_count);
           setValue("show", res.show);
-          setValue("barcode", res.barcode);
+          setValue("model_name", res.model_name);
           setValue("stock", res.stock);
           setTag(JSON.parse(res.tag));
-          setImageUrl(res.image);
+          setImageUrl(res.product_images);
           setVariants(res.variants);
           setValue("productId", res.productId);
           setProductId(res.productId);
-          setOriginalPrice(res?.prices?.originalPrice);
+          setOriginalPrice(res?.originalPrice);
           setPrice(res?.prices?.price);
-          setBarcode(res.barcode);
-          setSku(res.sku);
+          setModelName(res.model_name);
+          setModelCode(res.model_code);
           const result = res.variants.map(
             ({
               originalPrice,
               price,
               discount,
               quantity,
-              barcode,
-              sku,
+              modelName,
+              modelCode,
               productId,
               image,
               ...rest
@@ -231,15 +235,16 @@ const useProductSubmit = (id) => {
       setValue("language", language);
       handleProductTap("Basic Info", true);
       setResData({});
-      setValue("sku");
-      setValue("title");
+      setValue("model_code");
+      setValue("product_name_short");
       setValue("slug");
-      setValue("description");
+      setValue("retail_price");
+      setValue("product_description");
       setValue("quantity");
       setValue("stock");
-      setValue("originalPrice");
+      setValue("product_count");
       setValue("price");
-      setValue("barcode");
+      setValue("model_name");
       setValue("productId");
 
       setProductId("");
@@ -256,10 +261,12 @@ const useProductSubmit = (id) => {
         resetRefTwo?.current?.resetSelectedValues();
       }
 
-      clearErrors("sku");
+      clearErrors("model_code");
       clearErrors("title");
       clearErrors("slug");
-      clearErrors("description");
+      clearErrors("retail_price");
+      clearErrors("product_count");
+      clearErrors("product_description");
       clearErrors("stock");
       clearErrors("quantity");
       setValue("stock", 0);
@@ -267,7 +274,7 @@ const useProductSubmit = (id) => {
       setValue("price", 0);
       setValue("originalPrice", 0);
       clearErrors("show");
-      clearErrors("barcode");
+      clearErrors("model_name");
       setIsCombination(false);
       setIsBasicComplete(false);
       setIsSubmitting(false);
@@ -285,50 +292,44 @@ const useProductSubmit = (id) => {
         try {
           const res = await ProductServices.getProductById(id);
 
-          // console.log("res", res);
+          console.log("resEdit", res.category.name);
 
           if (res) {
             setResData(res);
-            setSlug(res.slug);
-            setUpdatedId(res._id);
-            setValue("title", res.title[language ? language : "en"]);
-            setValue(
-              "description",
-              res.description[language ? language : "en"]
-            );
-            setValue("slug", res.slug);
+            setSlug(res?.slug);
+            setUpdatedId(res?._id);
+            setValue("product_name_short", res?.product_name_short);
+            setValue("product_name_long", res?.product_name_long);
+            setValue("product_description", res.product_description);
+            setValue("retail_price", res?.retail_price);
+            setValue("slug", res?.slug);
             setValue("show", res.show);
-            setValue("sku", res.sku);
-            setValue("barcode", res.barcode);
+            setValue("model_code", res.model_code);
+            setValue("model_name", res.model_name);
+            setValue("product_count", res.product_count);
+            setValue("productId", res._id);
             setValue("stock", res.stock);
-            setValue("productId", res.productId);
             setValue("price", res?.prices?.price);
             setValue("originalPrice", res?.prices?.originalPrice);
-            setValue("stock", res.stock);
-            setProductId(res.productId ? res.productId : res._id);
-            setBarcode(res.barcode);
-            setSku(res.sku);
+            setProductId(res._id);
+            setModelName(res.model_name);
+            setModelCode(res.model_code);
 
             res.categories.map((category) => {
               category.name = showingTranslateValue(category?.name, lang);
 
               return category;
             });
-
-            res.category.name = showingTranslateValue(
-              res?.category?.name,
-              lang
-            );
-
+            res.category.name = res?.category?.name;
             setSelectedCategory(res.categories);
-            setDefaultCategory([res?.category]);
+            setDefaultCategory([res?.category?.name]);
+            setImageUrl(res.product_images);
             setTag(JSON.parse(res.tag));
-            setImageUrl(res.image);
             setVariants(res.variants);
             setIsCombination(res.isCombination);
             setQuantity(res?.stock);
             setTotalStock(res.stock);
-            setOriginalPrice(res?.prices?.originalPrice);
+            setOriginalPrice(res?.originalPrice);
             setPrice(res?.prices?.price);
           }
         } catch (err) {
@@ -401,8 +402,8 @@ const useProductSubmit = (id) => {
         discount,
         price,
         quantity,
-        barcode,
-        sku,
+        model_name,
+        model_code,
         productId,
         image,
         ...rest
@@ -427,8 +428,8 @@ const useProductSubmit = (id) => {
           quantity: Number(quantity),
           discount: Number(originalPrice - price),
           productId: productId && productId + "-" + (variants.length + i),
-          barcode: barcode,
-          sku: sku,
+          modelName: modelName,
+          modelCode: modelCode,
           image: imageUrl[0] || "",
         };
 
@@ -482,8 +483,8 @@ const useProductSubmit = (id) => {
           price,
           discount,
           quantity,
-          barcode,
-          sku,
+          model_name,
+          model_code,
           productId,
           image,
           ...rest
@@ -596,8 +597,8 @@ const useProductSubmit = (id) => {
   const handleSelectLanguage = (lang) => {
     setLanguage(lang);
     if (Object.keys(resData).length > 0) {
-      setValue("title", resData.title[lang ? lang : "en"]);
-      setValue("description", resData.description[lang ? lang : "en"]);
+      setValue("product_name_short", resData.product_name_short);
+      setValue("product_description", resData.product_description);
     }
   };
 

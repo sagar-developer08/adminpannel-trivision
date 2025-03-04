@@ -34,7 +34,7 @@ const OrderInvoice = () => {
   const { data, loading } = useAsync(() => OrderServices.getOrderById(id));
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
 
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "AED";
   return (
     <>
       <PageTitle> {t("InvoicePageTittle")} </PageTitle>

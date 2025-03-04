@@ -9,8 +9,15 @@ import React from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 
 const AttributeChildDrawer = ({ id }) => {
-  const { handleSubmit, onSubmits, register, errors, published, setPublished, handleSelectLanguage } =
-    useAttributeSubmit(id);
+  const {
+    handleSubmit,
+    onSubmits,
+    register,
+    errors,
+    published,
+    setPublished,
+    handleSelectLanguage,
+  } = useAttributeSubmit(id);
 
   return (
     <>
@@ -19,15 +26,15 @@ const AttributeChildDrawer = ({ id }) => {
           <Title
             register={register}
             handleSelectLanguage={handleSelectLanguage}
-            title="Add/Update Attribute Valu"
-            description="Add your attribute values and necessary information from here"
+            title="Add/Update Brand Valu"
+            description="Add your brand values and necessary information from here"
           />
         ) : (
           <Title
             register={register}
             handleSelectLanguage={handleSelectLanguage}
-            title="Add/Update Attribute Values"
-            description="Add your attribute values and necessary information from here"
+            title="Add/Update Brand Values"
+            description="Add your brand values and necessary information from here"
           />
         )}
       </div>
@@ -53,7 +60,10 @@ const AttributeChildDrawer = ({ id }) => {
               <LabelArea label="Published" />
 
               <div className="col-span-8 sm:col-span-4">
-                <SwitchToggle handleProcess={setPublished} processOption={published} />
+                <SwitchToggle
+                  handleProcess={setPublished}
+                  processOption={published}
+                />
                 <Error errorName={errors.published} />
               </div>
             </div>

@@ -15,7 +15,9 @@ import { showingTranslateValue } from "utils/translate";
 
 const AttributeTable = ({ lang, isCheck, setIsCheck, attributes }) => {
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
-
+  {
+    console.log("attributes::", attributes);
+  }
   const handleClick = (e) => {
     const { id, checked } = e.target;
     setIsCheck([...isCheck, id]);
@@ -49,40 +51,28 @@ const AttributeTable = ({ lang, isCheck, setIsCheck, attributes }) => {
               />
             </TableCell>
 
-            <TableCell className="font-semibold uppercase text-xs">
-              {attribute?._id?.substring(20, 24)}
-            </TableCell>
-
             <TableCell className="font-medium text-sm">
-              {showingTranslateValue(attribute.title, lang)}
+              <img
+                src={attribute?.brand_logo}
+                alt="brand logo"
+                width={80}
+                height={80}
+              />
             </TableCell>
-
             <TableCell className="font-medium text-sm">
-              {showingTranslateValue(attribute.name, lang)}
+              {attribute?.name}
             </TableCell>
-
             <TableCell className="font-medium text-sm">
-              {attribute.option}
+              {attribute?.slug}
             </TableCell>
-
-            <TableCell className="text-center">
-              <ShowHideButton id={attribute._id} status={attribute.status} />
+            <TableCell className="font-medium text-sm">
+              {attribute?.title?.substr(0, 30)}
+              {"..."}
             </TableCell>
-
-            <TableCell className="flex justify-center">
-              <Link
-                to={`/attributes/${attribute._id}`}
-                className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none"
-              >
-                <Tooltip
-                  id="edit values"
-                  Icon={FiEdit}
-                  title="Edit Values"
-                  bgColor="#10B981"
-                />
-              </Link>
+            <TableCell className="font-medium text-sm">
+              {attribute.content?.substr(0, 30)}
+              {"..."}
             </TableCell>
-
             <TableCell>
               <EditDeleteButton
                 id={attribute._id}

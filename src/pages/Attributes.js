@@ -34,14 +34,12 @@ import AttributeServices from "services/AttributeServices";
 const Attributes = () => {
   const { toggleDrawer, lang } = useContext(SidebarContext);
   const { data, loading } = useAsync(() =>
-    AttributeServices.getAllAttributes({
-      type: "attribute",
-      option: "Dropdown",
-      option1: "Radio",
-    })
+    AttributeServices.getAllAttributes()
   );
 
   const { handleDeleteMany, allId, handleUpdateMany } = useToggleDrawer();
+
+  console.log("data::", data);
 
   const { t } = useTranslation();
 
@@ -75,7 +73,11 @@ const Attributes = () => {
   return (
     <>
       <PageTitle>{t("AttributeTitle")}</PageTitle>
-      <DeleteModal ids={allId} setIsCheck={setIsCheck} title="Selected Attributes" />
+      <DeleteModal
+        ids={allId}
+        setIsCheck={setIsCheck}
+        title="Selected Attributes"
+      />
       <BulkActionDrawer ids={allId} title="Attributes" />
       <MainDrawer>
         <AttributeDrawer />
@@ -83,7 +85,10 @@ const Attributes = () => {
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <CardBody>
-          <form onSubmit={handleSubmitAttribute} className="py-3  grid gap-4 lg:gap-6 xl:gap-6  xl:flex">
+          <form
+            onSubmit={handleSubmitAttribute}
+            className="py-3  grid gap-4 lg:gap-6 xl:gap-6  xl:flex"
+          >
             <div className="flex justify-start xl:w-1/2  md:w-full">
               <UploadManyTwo
                 title="Attribute"
@@ -123,7 +128,10 @@ const Attributes = () => {
                 </Button>
               </div>
               <div className="w-full md:w-48 lg:w-48 xl:w-48">
-                <Button onClick={toggleDrawer} className="w-full rounded-md h-12 ">
+                <Button
+                  onClick={toggleDrawer}
+                  className="w-full rounded-md h-12 "
+                >
                   <span className="mr-2">
                     <FiPlus />
                   </span>
@@ -168,19 +176,14 @@ const Attributes = () => {
                     isChecked={isCheckAll}
                   />
                 </TableCell>
-                <TableCell> {t("Id")} </TableCell>
-                <TableCell> {t("AName")}</TableCell>
-                <TableCell> {t("ADisplayName")}</TableCell>
-                <TableCell>{t("AOption")}</TableCell>
-
-                <TableCell className="text-center">{t("catPublishedTbl")}</TableCell>
-
-                <TableCell className="text-center">{t("Avalues")}</TableCell>
-
+                <TableCell>Logo</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Slug</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Content</TableCell>
                 <TableCell className="text-right">{t("AAction")}</TableCell>
               </tr>
             </TableHeader>
-
             <AttributeTable
               lang={lang}
               isCheck={isCheck}
@@ -198,7 +201,7 @@ const Attributes = () => {
           </TableFooter>
         </TableContainer>
       ) : (
-        <NotFound title="Sorry, There are no attributes right now." />
+        <NotFound title="Sorry, There are no brands right now." />
       )}
     </>
   );

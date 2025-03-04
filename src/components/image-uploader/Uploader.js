@@ -35,7 +35,7 @@ const Uploader = ({ setImageUrl, imageUrl, product, folder }) => {
     maxFiles: globalSetting?.number_of_image_per_product || 2,
     onDrop: (acceptedFiles) => {
       setFiles(
-        acceptedFiles.map((file) =>
+        acceptedFiles?.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
@@ -46,11 +46,11 @@ const Uploader = ({ setImageUrl, imageUrl, product, folder }) => {
 
   useEffect(() => {
     if (fileRejections) {
-      fileRejections.map(({ file, errors }) => (
+      fileRejections?.map(({ file, errors }) => (
         <li key={file.path}>
           {file.path} - {file.size} bytes
           <ul>
-            {errors.map((e) => (
+            {errors?.map((e) => (
               <li key={e.code}>
                 {e.code === "too-many-files"
                   ? notifyError(
@@ -127,7 +127,7 @@ const Uploader = ({ setImageUrl, imageUrl, product, folder }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
-  const thumbs = files.map((file) => (
+  const thumbs = files?.map((file) => (
     <div key={file.name}>
       <div>
         <img
@@ -200,7 +200,7 @@ const Uploader = ({ setImageUrl, imageUrl, product, folder }) => {
           <div className="relative">
             {" "}
             <img
-              className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
+              className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-40 max-h-40 p-2"
               src={imageUrl}
               alt="product"
             />

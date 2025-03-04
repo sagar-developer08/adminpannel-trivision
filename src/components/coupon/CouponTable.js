@@ -37,7 +37,7 @@ const CouponTable = ({ lang, isCheck, coupons, setIsCheck }) => {
     }
   };
 
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "AED";
 
   useEffect(() => {
     const result = coupons?.map((el) => {

@@ -66,7 +66,7 @@ const Dashboard = () => {
     OrderServices.getDashboardAmount
   );
 
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "AED";
 
   // console.log("dashboardOrderCount", dashboardOrderCount);
 
@@ -364,7 +364,7 @@ const Dashboard = () => {
               lang={lang}
               orders={dataTable}
               globalSetting={globalSetting}
-              currency={globalSetting?.default_currency || "$"}
+              currency={globalSetting?.default_currency || "AED"}
             />
           </Table>
           <TableFooter>

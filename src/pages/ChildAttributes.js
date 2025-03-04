@@ -39,11 +39,7 @@ const ChildAttributes = () => {
   );
 
   const { data: attributes } = useAsync(() =>
-    AttributeServices.getAllAttributes({
-      type: "attribute",
-      option: "Dropdown",
-      option1: "Radio",
-    })
+    AttributeServices.getAllAttributes()
   );
 
   const {
