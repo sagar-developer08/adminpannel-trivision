@@ -38,9 +38,12 @@ const Category = () => {
 
   const { data, loading } = useAsync(CategoryServices.getAllCategory);
 
-  const { data: getAllCategories } = useAsync(CategoryServices.getAllCategories);
+  const { data: getAllCategories } = useAsync(
+    CategoryServices.getAllCategories
+  );
 
-  const { handleDeleteMany, allId, handleUpdateMany, serviceId } = useToggleDrawer();
+  const { handleDeleteMany, allId, handleUpdateMany, serviceId } =
+    useToggleDrawer();
 
   const { t } = useTranslation();
 
@@ -57,7 +60,7 @@ const Category = () => {
     handleSelectFile,
     handleUploadMultiple,
     handleRemoveSelectFile,
-  } = useFilter(data || []);
+  } = useFilter(getAllCategories || []);
 
   // react hooks
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -72,15 +75,21 @@ const Category = () => {
     }
   };
   // CategoryServices.getAllCategory().then(console.log).catch(console.error);
-  
-console.log('data',data,'dt',getAllCategories)
+
+  console.log("data", data, "dt", getAllCategories);
 
   return (
     <>
-     <PageTitle>{t("Category")}</PageTitle>
+      <PageTitle>{t("Category")}</PageTitle>
       <DeleteModal ids={allId} setIsCheck={setIsCheck} />
 
-      <BulkActionDrawer ids={allId} title="Categories" lang={lang} data={data} isCheck={isCheck} />
+      <BulkActionDrawer
+        ids={allId}
+        title="Categories"
+        lang={lang}
+        data={data}
+        isCheck={isCheck}
+      />
 
       <MainDrawer>
         <CategoryDrawer id={serviceId} data={data} lang={lang} />
@@ -89,7 +98,10 @@ console.log('data',data,'dt',getAllCategories)
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <CardBody className="">
           {/* <div className="flex md:flex-row flex-col gap-3 justify-end items-end"> */}
-          <form onSubmit={handleSubmitCategory} className="py-3  grid gap-4 lg:gap-6 xl:gap-6  xl:flex">
+          <form
+            onSubmit={handleSubmitCategory}
+            className="py-3  grid gap-4 lg:gap-6 xl:gap-6  xl:flex"
+          >
             {/* </div> */}
             <div className="flex justify-start w-1/2 xl:w-1/2 md:w-full">
               <UploadManyTwo
@@ -131,7 +143,10 @@ console.log('data',data,'dt',getAllCategories)
                 </Button>
               </div>
               <div className="w-full md:w-48 lg:w-48 xl:w-48">
-                <Button onClick={toggleDrawer} className="rounded-md h-12 w-full">
+                <Button
+                  onClick={toggleDrawer}
+                  className="rounded-md h-12 w-full"
+                >
                   <span className="mr-2">
                     <FiPlus />
                   </span>
@@ -162,12 +177,12 @@ console.log('data',data,'dt',getAllCategories)
         </CardBody>
       </Card>
 
-      <SwitchToggleChildCat
+      {/* <SwitchToggleChildCat
         title=" "
         handleProcess={setShowChild}
         processOption={showChild}
         name={showChild}
-      />
+      /> */}
       {loading ? (
         <TableLoading row={12} col={6} width={190} height={20} />
       ) : serviceData?.length !== 0 ? (
@@ -184,13 +199,11 @@ console.log('data',data,'dt',getAllCategories)
                     isChecked={isCheckAll}
                   />
                 </TableCell>
-
-                <TableCell>{t("catIdTbl")}</TableCell>
-                <TableCell>{t("catIconTbl")}</TableCell>
-                <TableCell>{t("CatTbName")}</TableCell>
-                {/* <TableCell>{t("CatTbDescription")}</TableCell> */}
-                <TableCell className="text-center">{t("catPublishedTbl")}</TableCell>
-                <TableCell className="text-right">{t("catActionsTbl")}</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Slug</TableCell>
+                <TableCell className="text-right">
+                  {t("catActionsTbl")}
+                </TableCell>
               </tr>
             </TableHeader>
 
@@ -202,7 +215,6 @@ console.log('data',data,'dt',getAllCategories)
               setIsCheck={setIsCheck}
               showChild={showChild}
             />
-    
           </Table>
 
           <TableFooter>

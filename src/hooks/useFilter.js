@@ -200,9 +200,7 @@ const useFilter = (data) => {
     if (categoryType) {
       services = services.filter(
         (search) =>
-          search?.name[lang]
-            ?.toLowerCase()
-            ?.includes(categoryType?.toLowerCase()) ||
+          search?.name?.toLowerCase()?.includes(categoryType?.toLowerCase()) ||
           search?.category?.toLowerCase().includes(categoryType?.toLowerCase())
       );
     }

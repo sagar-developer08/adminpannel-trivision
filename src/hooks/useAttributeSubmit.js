@@ -15,7 +15,7 @@ const useAttributeSubmit = (id) => {
   const [variants, setVariants] = useState([]);
   const [language, setLanguage] = useState(lang);
   const [resData, setResData] = useState({});
-  const [imageUrl, setImageUrl] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
   const [published, setPublished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -47,7 +47,6 @@ const useAttributeSubmit = (id) => {
     slug,
     title,
     content,
-    brand_logo,
     meta_title,
     meta_description,
   }) => {
@@ -64,7 +63,7 @@ const useAttributeSubmit = (id) => {
         slug: slug,
         title: title,
         content: content,
-        brand_logo: brand_logo,
+        brand_logo: imageUrl,
         meta_title: meta_title,
         meta_description: meta_description,
       };
@@ -176,7 +175,7 @@ const useAttributeSubmit = (id) => {
       clearErrors("brand_logo");
       clearErrors("option");
       setVariants([]);
-      setImageUrl([]);
+      setImageUrl("");
       setLanguage(lang);
       setValue("language", language);
       return;
@@ -193,7 +192,7 @@ const useAttributeSubmit = (id) => {
             setValue("title", res.title);
             setValue("content", res.content);
             setValue("brand_logo", res.brand_logo);
-            setImageUrl([res.brand_logo]);
+            setImageUrl(res.brand_logo);
             setValue("option", res.categories);
           }
         } catch (err) {

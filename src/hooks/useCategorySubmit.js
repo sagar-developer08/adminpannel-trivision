@@ -27,21 +27,13 @@ const useCategorySubmit = (id, data) => {
 
   // console.log("lang", lang, language);
 
-  const onSubmit = async ({ name, description }) => {
+  const onSubmit = async ({ name, slug, description }) => {
     try {
       setIsSubmitting(true);
       const categoryData = {
-        name: {
-          [language]: name,
-        },
-        description: { [language]: description ? description : "" },
-        parentId: checked ? checked : undefined,
-        parentName: selectCategoryName ? selectCategoryName : "Home",
-        // parentName: selectCategoryName ? selectCategoryName : 'Home',
-
-        icon: imageUrl,
-        status: published ? "show" : "hide",
-        lang: language,
+        name: name,
+        slug: slug,
+        description: "",
       };
 
       // console.log('category submit', categoryData);
@@ -79,6 +71,7 @@ const useCategorySubmit = (id, data) => {
     if (!isDrawerOpen) {
       setResData({});
       setValue("name");
+      setValue("slug");
       setValue("parentId");
       setValue("parentName");
       setValue("description");
@@ -86,6 +79,7 @@ const useCategorySubmit = (id, data) => {
       setImageUrl("");
       setPublished(true);
       clearErrors("name");
+      clearErrors("slug");
       clearErrors("parentId");
       clearErrors("parentName");
       clearErrors("description");
@@ -106,11 +100,9 @@ const useCategorySubmit = (id, data) => {
 
           if (res) {
             setResData(res);
-            setValue("name", res.name[language ? language : "en"]);
-            setValue(
-              "description",
-              res.description[language ? language : "en"]
-            );
+            setValue("name", res.name);
+            setValue("slug", res.slug);
+            setValue("description", res.description);
             setValue("language", language);
             setValue("parentId", res.parentId);
             setValue("parentName", res.parentName);

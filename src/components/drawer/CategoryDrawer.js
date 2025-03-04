@@ -137,81 +137,29 @@ const CategoryDrawer = ({ id, data, lang }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="p-6 flex-grow scrollbar-hide w-full max-h-full pb-40">
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("Name")} />
+              <LabelArea label="Category Name" />
               <div className="col-span-8 sm:col-span-4">
                 <InputArea
                   register={register}
-                  label="Category title"
+                  label="Category Name"
                   name="name"
                   type="text"
-                  placeholder={t("ParentCategoryPlaceholder")}
+                  placeholder="Name"
                 />
                 <Error errorName={errors.name} />
               </div>
             </div>
-
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("Description")} />
+              <LabelArea label="Category Slug" />
               <div className="col-span-8 sm:col-span-4">
-                <TextAreaCom
-                  required
+                <InputArea
                   register={register}
-                  label="Description"
-                  name="description"
+                  label="Category Slug"
+                  name="slug"
                   type="text"
-                  placeholder="Category Description"
+                  placeholder="Slug"
                 />
-                <Error errorName={errors.description} />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("ParentCategory")} />
-              <div className="col-span-8 sm:col-span-4 relative">
-                <Input
-                  readOnly
-                  {...register(`parent`, {
-                    required: false,
-                  })}
-                  name="parent"
-                  value={selectCategoryName ? selectCategoryName : "Home"}
-                  placeholder={t("ParentCategory")}
-                  type="text"
-                  className="border h-12 w-full text-sm focus:outline-none block bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                />
-
-                <div className="draggable-demo capitalize">
-                  <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-                  <Tree
-                    expandAction="click"
-                    treeData={renderCategories(data)}
-                    selectedKeys={[checked]}
-                    onSelect={(v) => handleSelect(v[0])}
-                    motion={motion}
-                    animation="slide-up"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("CategoryIcon")} />
-              <div className="col-span-8 sm:col-span-4">
-                <Uploader
-                  imageUrl={imageUrl}
-                  setImageUrl={setImageUrl}
-                  folder="category"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("Published")} />
-              <div className="col-span-8 sm:col-span-4">
-                <SwitchToggle
-                  handleProcess={setPublished}
-                  processOption={published}
-                />
+                <Error errorName={errors.slug} />
               </div>
             </div>
           </div>

@@ -52,10 +52,9 @@ const AttributeDrawer = ({ id }) => {
               <LabelArea label="Brand Logo" />
               <div className="col-span-8 sm:col-span-4">
                 <Uploader
-                  // product
-                  // folder="brand"
                   imageUrl={imageUrl}
                   setImageUrl={setImageUrl}
+                  folder="brand"
                 />
               </div>
             </div>
