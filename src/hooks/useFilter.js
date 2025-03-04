@@ -186,10 +186,9 @@ const useFilter = (data) => {
     }
 
     if (attributeTitle) {
-      console.log("asss");
       services = services.filter(
         (search) =>
-          search?.title[lang]
+          search?.name
             ?.toLowerCase()
             ?.includes(attributeTitle?.toLowerCase()) ||
           search?.attribute
