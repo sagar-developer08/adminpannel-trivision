@@ -9,6 +9,7 @@ import useAsync from "./useAsync";
 import { SidebarContext } from "context/SidebarContext";
 import AttributeServices from "services/AttributeServices";
 import ProductServices from "services/ProductServices";
+import CategoryServices from "services/CategoryServices";
 import { notifyError, notifySuccess } from "utils/toast";
 import SettingServices from "services/SettingServices";
 import { showingTranslateValue } from "utils/translate";
@@ -20,6 +21,7 @@ const useProductSubmit = (id) => {
 
   const { data: attribue } = useAsync(AttributeServices.getShowingAttributes);
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
+  const { data: allCategories } = useAsync(CategoryServices.getAllCategories);
 
   // react ref
   const resetRef = useRef([]);
@@ -56,6 +58,10 @@ const useProductSubmit = (id) => {
   const [slug, setSlug] = useState("");
 
   console.log("selectedCategory::", selectedCategory);
+
+  useEffect(() => {
+    setSelectedCategory(allCategories);
+  }, [allCategories]);
 
   // console.log(
   //   "defaultCategory",
@@ -321,7 +327,7 @@ const useProductSubmit = (id) => {
               return category;
             });
             res.category.name = res?.category?.name;
-            setSelectedCategory(res.categories);
+            setSelectedCategory(allCategories);
             setDefaultCategory([res?.category?.name]);
             setImageUrl(res.product_images);
             setTag(JSON.parse(res.tag));
