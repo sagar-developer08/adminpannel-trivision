@@ -26,16 +26,12 @@ const OrderTable = ({ orders, currency, globalSetting }) => {
 
             <TableCell>
               <span className="text-sm">
-                {showDateTimeFormat(
-                  order?.updatedDate,
-                  globalSetting?.default_date_format,
-                  "h:mm A"
-                )}
+                {showDateTimeFormat(order?.updatedDate) || 'No date available'}
               </span>
             </TableCell>
 
             <TableCell className="text-xs">
-              <span className="text-sm">{order?.user_info?.name}</span>{" "}
+              <span className="text-sm">{order?.user?.name}</span>{" "}
             </TableCell>
 
             <TableCell>
