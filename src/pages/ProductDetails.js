@@ -32,7 +32,7 @@ const ProductDetails = () => {
   const { lang } = useContext(SidebarContext);
 
   const { data, loading } = useAsync(() => ProductServices.getProductById(id));
-  console.log(data, "product-details");
+  // console.log(data, "product-details");
 
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
   const currency = globalSetting?.default_currency || "AED";

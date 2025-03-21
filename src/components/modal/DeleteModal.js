@@ -12,6 +12,7 @@ import CouponServices from "services/CouponServices";
 import CustomerServices from "services/CustomerServices";
 import LanguageServices from "services/LanguageServices";
 import ProductServices from "services/ProductServices";
+import deleteBooking from "services/EyeTestServices";
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -178,8 +179,8 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
         }
       }
 
-      if (location.pathname === "/our-staff") {
-        const res = await AdminServices.deleteStaff(id);
+      if (location.pathname === "/eye-tests") {
+        const res = await deleteBooking.deleteStaff(id);
         setIsUpdate(true);
         notifySuccess(res.message);
         setServiceId();

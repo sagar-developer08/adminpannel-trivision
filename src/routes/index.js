@@ -8,7 +8,11 @@ const Products = lazy(() => import("../pages/Products"));
 const ProductDetails = lazy(() => import("../pages/ProductDetails"));
 const Category = lazy(() => import("../pages/Category"));
 const ChildCategory = lazy(() => import("../pages/ChildCategory"));
-const Staff = lazy(() => import("../pages/Staff"));
+const EyeTest = lazy(() => import("../pages/EyeTest"));
+const EyeTestDetails = lazy(() => import("../pages/EyeTestDetails"));
+const Store = lazy(() => import("../pages/Store"));
+const StoreDetails = lazy(() => import("../pages/StoreDetails"));
+const Testimonials = lazy(() => import("../pages/Testimonials"));
 const Customers = lazy(() => import("../pages/Customers"));
 const CustomerOrder = lazy(() => import("../pages/CustomerOrder"));
 const Orders = lazy(() => import("../pages/Orders"));
@@ -79,8 +83,24 @@ const routes = [
     component: CustomerOrder,
   },
   {
-    path: "/our-staff",
-    component: Staff,
+    path: "/eye-test",
+    component: EyeTest,
+  },
+  {
+    path: "/eye-test/:id",
+    component: EyeTestDetails,
+  },
+  {
+    path: "/store",
+    component: Store,
+  },
+  {
+    path: "/store/:id",
+    component: StoreDetails,
+  },
+  {
+    path: "/testimonials",
+    component: Testimonials,
   },
   {
     path: "/orders",
