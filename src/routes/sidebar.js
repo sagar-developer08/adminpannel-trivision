@@ -1,3 +1,4 @@
+import { BsFileFont } from "react-icons/bs";
 import {
   FiGrid,
   FiUsers,
@@ -7,6 +8,8 @@ import {
   FiSlack,
   FiGlobe,
   FiTarget,
+  FiMapPin,
+  FiCircle
 } from "react-icons/fi";
 
 /**
@@ -58,53 +61,63 @@ const sidebar = [
   },
 
   {
-    path: "/our-staff",
+    path: "/eye-test",
     icon: FiUser,
-    name: "OurStaff",
+    name: "Book & Eye Test",
+  },
+  {
+    path: "/store",
+    icon: FiMapPin,
+    name: "Store Locator",
+  },
+  {
+    path: "/testimonials",
+    icon: FiCircle,
+    name: "Testimonials",
   },
 
-  {
-    path: "/settings",
-    icon: FiSettings,
-    name: "StoreSetting",
-  },
-  {
-    icon: FiGlobe,
-    name: "International",
-    routes: [
-      {
-        path: "/languages",
-        name: "Languages",
-      },
-      {
-        path: "/currencies",
-        name: "Currencies",
-      },
-    ],
-  },
-  {
-    icon: FiTarget,
-    name: "ViewStore",
-    path: "http://localhost:4000",
-    outside: "store",
-  },
+  // {
+  //   path: "/settings",
+  //   icon: FiSettings,
+  //   name: "StoreSetting",
+  // },
+  // {
+  //   icon: FiGlobe,
+  //   name: "International",
+  //   routes: [
+  //     {
+  //       path: "/languages",
+  //       name: "Languages",
+  //     },
+  //     {
+  //       path: "/currencies",
+  //       name: "Currencies",
+  //     },
+  //   ],
+  // },
+  // {
+  //   icon: FiTarget,
+  //   name: "ViewStore",
+  //   path: "http://localhost:4000",
+  //   outside: "store",
+  // },
 
-  {
-    icon: FiSlack,
-    name: "Pages",
-    routes: [
-      // submenu
+  // {
+  //   icon: FiSlack,
+  //   name: "Pages",
+  //   routes: [
+  //     // submenu
 
-      {
-        path: "/404",
-        name: "404",
-      },
-      {
-        path: "/coming-soon",
-        name: "Coming Soon",
-      },
-    ],
-  },
+  //     {
+  //       path: "/404",
+  //       name: "404",
+  //     },
+  //     {
+  //       path: "/coming-soon",
+  //       name: "Coming Soon",
+  //     },
+  //   ],
+  // },
 ];
 
 export default sidebar;

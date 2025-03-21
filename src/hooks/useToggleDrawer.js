@@ -6,8 +6,7 @@ const useToggleDrawer = () => {
   const [serviceId, setServiceId] = useState("");
   const [allId, setAllId] = useState([]);
   const [title, setTitle] = useState("");
-  const { toggleDrawer, isDrawerOpen, toggleModal, toggleBulkDrawer } =
-    useContext(SidebarContext);
+  const { toggleDrawer, isDrawerOpen, toggleModal, toggleBulkDrawer } = useContext(SidebarContext);
 
   const handleUpdate = (id) => {
     setServiceId(id);
