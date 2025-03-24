@@ -20,7 +20,7 @@ import { FiPlus } from "react-icons/fi";
 import useAsync from "hooks/useAsync";
 import useFilter from "hooks/useFilter";
 import MainDrawer from "components/drawer/MainDrawer";
-import StaffDrawer from "components/drawer/StaffDrawer";
+import StoreDrawer from "components/drawer/SroteDrawer";
 import TableLoading from "components/preloader/TableLoading";
 import StoreTable from "components/store/StoreTable";
 import NotFound from "components/table/NotFound";
@@ -57,7 +57,7 @@ const Store = () => {
         <>
             <PageTitle>{t("Store")} </PageTitle>
             <MainDrawer>
-                <StaffDrawer />
+                <StoreDrawer />
             </MainDrawer>
 
             <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -90,14 +90,14 @@ const Store = () => {
               </Select>
             </div> */}
 
-                        {/* <div className="w-full md:w-56 lg:w-56 xl:w-56">
+                        <div className="w-full md:w-56 lg:w-56 xl:w-56">
               <Button onClick={toggleDrawer} className="w-full rounded-md h-12">
                 <span className="mr-3">
                   <FiPlus />
                 </span>
-                {t("AddStaff")}
+                {t("AddStore")}
               </Button>
-            </div> */}
+            </div>
                     </form>
                 </CardBody>
             </Card>
@@ -135,7 +135,7 @@ const Store = () => {
                     </TableFooter>
                 </TableContainer>
             ) : (
-                <NotFound title="Sorry, There are no staff right now." />
+                <NotFound title="Sorry, There are no Stores right now." />
             )}
         </>
     );
