@@ -4,7 +4,6 @@ import {
     CardBody,
     Input,
     Pagination,
-    Select,
     Table,
     TableCell,
     TableContainer,
@@ -16,7 +15,6 @@ import { useTranslation } from "react-i18next";
 import { FiPlus } from "react-icons/fi";
 
 //internal import
-
 import useAsync from "hooks/useAsync";
 import useFilter from "hooks/useFilter";
 import MainDrawer from "components/drawer/MainDrawer";
@@ -32,7 +30,7 @@ import StoreServices from "services/StoreServices";
 const Store = () => {
     const { state } = useContext(AdminContext);
     const { adminInfo } = state;
-    const { toggleDrawer, lang } = useContext(SidebarContext);
+    const { toggleDrawer, isDrawerOpen } = useContext(SidebarContext);
 
     const { data, loading } = useAsync(() => StoreServices.getAllStores({ Store_Address: adminInfo.StoreAddress }));
     console.log("Fetched Store:", data);
@@ -50,15 +48,14 @@ const Store = () => {
 
     const { t } = useTranslation();
 
-    // console.log("Filtered dataTable:", dataTable);
-    // console.log("Service data:", serviceData);
-
     return (
         <>
             <PageTitle>{t("Store")} </PageTitle>
-            <MainDrawer>
-                <StoreDrawer />
-            </MainDrawer>
+            {isDrawerOpen && (
+                <MainDrawer>
+                    <StoreDrawer />
+                </MainDrawer>
+            )}
 
             <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
                 <CardBody>
@@ -76,54 +73,34 @@ const Store = () => {
                             />
                             <button type="submit" className="absolute right-0 top-0 mt-5 mr-1"></button>
                         </div>
-                        {/* <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
-              <Select
-                onChange={(e) => setRole(e.target.value)}
-                className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-              >
-                <option value="All" defaultValue hidden>
-                  {t("StaffRole")}
-                </option>
-                <option value="Admin">{t("StaffRoleAdmin")}</option>
-                <option value="Cashier">{t("SelectCashiers")}</option>
-                <option value="Super Admin">{t("SelectSuperAdmin")}</option>
-              </Select>
-            </div> */}
 
                         <div className="w-full md:w-56 lg:w-56 xl:w-56">
-              <Button onClick={toggleDrawer} className="w-full rounded-md h-12">
-                <span className="mr-3">
-                  <FiPlus />
-                </span>
-                {t("AddStore")}
-              </Button>
-            </div>
+                            <Button onClick={toggleDrawer} className="w-full rounded-md h-12">
+                                <span className="mr-3">
+                                    <FiPlus />
+                                </span>
+                                {t("AddStore")}
+                            </Button>
+                        </div>
                     </form>
                 </CardBody>
             </Card>
 
             {loading ? (
-                // <Loading loading={loading} />
                 <TableLoading row={12} col={7} width={163} height={20} />
             ) : serviceData?.length !== 0 ? (
                 <TableContainer className="mb-8 rounded-b-lg">
                     <Table>
                         <TableHeader>
                             <tr>
-                                {/* <TableCell>{t("Store Address")}</TableCell> */}
                                 <TableCell>{t("Store Address")}</TableCell>
-                                {/* <TableCell>{t("StaffContactTbl")}</TableCell> */}
                                 <TableCell>{t("Services")}</TableCell>
-                                {/* <TableCell>{t("Store Location")}</TableCell> */}
                                 <TableCell className="text-center">{t("DetailsTbl")}</TableCell>
-                                {/* <TableCell className="text-center">{t("Time")}</TableCell> */}
-                                {/* <TableCell className="text-center">{t("PublishedTbl")}</TableCell> */}
-
                                 <TableCell className="text-right">{t("StaffActionsTbl")}</TableCell>
                             </tr>
                         </TableHeader>
 
-                        <StoreTable staffs={dataTable} lang={lang} />
+                        <StoreTable staffs={dataTable} />
                     </Table>
                     <TableFooter>
                         <Pagination
