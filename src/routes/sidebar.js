@@ -35,6 +35,14 @@ const sidebar = [
         name: "Products",
       },
       {
+        path: "/contact-lens",
+        name: "ContactLens",
+      },
+      {
+        path: "/accessories",
+        name: "Accessories",
+      },
+      {
         path: "/categories",
         name: "Categories",
       },

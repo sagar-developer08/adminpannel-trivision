@@ -25,6 +25,10 @@ const EditProfile = lazy(() => import("../pages/EditProfile"));
 const Languages = lazy(() => import("../pages/Languages"));
 const Currencies = lazy(() => import("../pages/Currencies"));
 const Setting = lazy(() => import("../pages/Setting"));
+const ContactLens = lazy(() => import("../pages/Contact-lens"));
+const ContactLensDetails = lazy(() => import("../pages/Contact-lensDetails"));
+const Accessories = lazy(() => import("../pages/Accessories"));
+const AccessoriesDetails = lazy(() => import("../pages/AccessoriesDetails"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -44,6 +48,22 @@ const routes = [
   {
     path: "/products",
     component: Products,
+  },
+  {
+    path: "/contact-lens",
+    component: ContactLens,
+  },
+  {
+    path: "/contact-lens/:id",
+    component: ContactLensDetails,
+  },
+  {
+    path: "/accessories",
+    component: Accessories,
+  },
+  {
+    path: "/accessories/:id",
+    component: AccessoriesDetails,
   },
   {
     path: "/attributes",
